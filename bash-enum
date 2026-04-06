@@ -1,0 +1,16 @@
+#!/bin/bash
+
+TARGET=$1
+
+if [ -z "$TARGET" ]; then
+    echo "Usage: ./enum.sh <target_ip>"
+    exit 1
+fi
+
+# Launching terminal with multiple tabs for different tools
+# We use "bash -c 'command; exec bash'" to keep the tab open after the tool finishes
+xfce4-terminal \
+    --title="Nmap Scan" -e "bash -c 'nmap -sV -sC $TARGET; exec bash'" \
+    --tab --title="Directory Brute" -e "bash -c 'ffuf -u http://$TARGET -w /usr/share/wordlists/dirb/common.txt; exec bash'" \
+    --tab --title="Nikto" -e "bash -c 'nikto -h $TARGET; exec bash'" \
+    --tab --title="SMB Enum" -e "bash -c 'enum4linux -a $TARGET; exec bash'"
