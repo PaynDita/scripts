@@ -12,5 +12,5 @@ fi
 xfce4-terminal \
     --title="Nmap Scan" -e "bash -c 'nmap -sV -sC $TARGET; exec bash'" \
     --tab --title="Directory Brute" -e "bash -c 'ffuf -u http://$TARGET -w /usr/share/wordlists/dirb/common.txt; exec bash'" \
-    --tab --title="Nikto" -e "bash -c 'nikto -h $TARGET; exec bash'" \
+    --tab --title="Nikto" -e "bash -c 'nuclei -u http://target.com -severity critical,high,medium -rate-limit 50 -as -o results.txt; exec bash'" \
     --tab --title="SMB Enum" -e "bash -c 'enum4linux -a $TARGET; exec bash'"
